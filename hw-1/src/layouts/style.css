@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    outline: none;
+    font-family: Roboto, sans-serif;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+:root {
+    --main-color: #FF5555;
+    --grey-color: #D9D9D9;
+    --main-color-hower: rgba(255, 85, 85, 0.7);
+    --shadow: rgba(182, 182, 182, 0.25);
+    --link-color: #208FBF;
+}
+
+.repo {
+    margin: 10px auto;
+    width: 400px;
+    padding: 20px;
+    display: grid;
+    grid-template-rows: 50px auto;
+    row-gap: 20px;
+
+}
+
+.repo__search-input {
+    width: 298px;
+    height: 100%;
+    padding: 16px 12px;
+    border: 1px var(--grey-color) solid;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.repo__search-input:focus {
+    border: 1px var(--main-color) solid;
+}
+
+.repo__search-button {
+    vertical-align: middle;
+    width: 50px;
+    height: 100%;
+    padding: 16px;
+    background-color: var(--main-color);
+    border: 0;
+    border-radius: 6px;
+    margin-left: 12px;
+}
+
+.repo__search-button:hover {
+    background-color: var(--main-color-hower);
+    cursor: url("cursor_ pointer.svg"), pointer;
+}
+
+.repo__search-button:disabled {
+    background-color: var(--grey-color);
+    border: 1px var(--grey-color) solid;
+}
+
+
+.repo-cart {
+    padding: 12px;
+    display: flex;
+    font-size: 14px;
+    color: var(--grey-color);
+    border: 1px var(--grey-color) solid;
+    border-radius: 6px;
+    cursor: url("cursor_ pointer.svg"), pointer;
+    margin-bottom: 16px;
+}
+
+.repo-cart:hover {
+    box-shadow: 0 2px 6px var(--shadow);
+}
+
+.repo-cart__avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--main-color);
+    text-align: center;
+}
+
+.repo-cart__avatar-span {
+    display: inline-block;
+    color: white;
+    height: 40px;
+    font-size: 40px;
+    margin-top: 20px;
+    vertical-align: middle;
+}
+
+.repo-cart-info {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 12px;
+}
+
+.repo-cart-info > * {
+    margin-bottom: 4px;
+}
+
+.repo-cart-info__title {
+    font-size: 16px;
+    color: black;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.repo-cart-info__org-link a {
+    font-size: 14px;
+    color: var(--grey-color);
+}
+
+.repo-cart-info__org-link a:hover {
+    color: var(--link-color);
+}
+
+.repo-cart-info__star img {
+    vertical-align: middle;
+}
+
+.star-counter {
+    vertical-align: middle;
+    margin: 0 20px 0 4px;
+}
+
