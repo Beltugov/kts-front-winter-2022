@@ -1,0 +1,66 @@
+.cart {
+  padding: 12px;
+  display: flex;
+  font-size: 14px;
+  color: var(--grey-color);
+  border: 1px var(--grey-color-border) solid;
+  border-radius: 6px;
+  cursor: url("../../assets/cursor_ pointer.svg"), pointer;
+  margin-bottom: 16px;
+}
+.cart__avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--main-color);
+  text-align: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.cart__avatar .letter {
+  display: inline-block;
+  color: white;
+  height: 40px;
+  font-size: 40px;
+  margin-top: 20px;
+  vertical-align: middle;
+}
+.cart-info {
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 12px;
+}
+.cart-info__title {
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cart-info__org-link a {
+  font-size: 14px;
+  color: var(--grey-color);
+}
+.cart-info__org-link a:hover {
+  color: var(--link-color);
+}
+.cart-info .star-icon {
+  vertical-align: middle;
+  color: gold;
+}
+.cart-info .star-counter {
+  vertical-align: middle;
+  margin: 0 20px 0 4px;
+}
+.cart-info > * {
+  margin-bottom: 4px;
+}
+
+.cart:hover {
+  box-shadow: 0 2px 6px var(--shadow);
+}
+
+/*# sourceMappingURL=RepoTile.css.map */
