@@ -1,0 +1,9 @@
+.repo {
+    margin: 10px auto;
+    width: 400px;
+    padding: 20px;
+    display: grid;
+    grid-template-rows: 50px auto;
+    row-gap: 20px;
+
+}
