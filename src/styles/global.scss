@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  outline: none;
+  font-family: Roboto, sans-serif;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+:root {
+  --main-color: #FF5555;
+  --grey-color: #7E7E7E;
+  --grey-color-border: #D9D9D9;
+  --main-color-hower: rgba(255, 85, 85, 0.7);
+  --shadow: rgba(182, 182, 182, 0.25);
+  --link-color: #208FBF;
+}

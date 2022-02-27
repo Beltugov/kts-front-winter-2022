@@ -1,0 +1,21 @@
+.button {
+  vertical-align: middle;
+  width: 50px;
+  height: 100%;
+  padding: 16px;
+  color: white;
+  background-color: var(--main-color);
+  border: 0;
+  border-radius: 6px;
+  margin-left: 12px;
+}
+
+.button:hover {
+  background-color: var(--main-color-hower);
+  cursor: url("../../assets/cursor_ pointer.svg"), pointer;
+}
+
+.button:disabled {
+  background-color: var(--grey-color);
+  border: 1px var(--grey-color) solid;
+}
