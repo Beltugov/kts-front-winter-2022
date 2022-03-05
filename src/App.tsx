@@ -2,16 +2,10 @@ import React from "react";
 
 import "./App.scss";
 import "./styles/global.scss";
-import { BrowserRouter } from "react-router-dom";
-
-import AppRoutes from "./AppRoutes";
+import ReposSearchPage from "./pages/ReposSearchPage";
 
 function App() {
-  return (
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
-  );
+  return <ReposSearchPage />;
 }
 
 export default App;
