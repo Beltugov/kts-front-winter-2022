@@ -1,5 +1,5 @@
 export interface IButton {
   isDisabled: boolean;
-  onClick: (e: string | null) => void;
+  onClick: (input: string) => Promise<void>;
   inputValue: string;
 }

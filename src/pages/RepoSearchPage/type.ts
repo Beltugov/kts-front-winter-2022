@@ -1,7 +1,6 @@
 import { RepoItem } from "../../store/GitHubStore/types";
 
-export type ReposContext = {
+export interface ReposContext {
   list: RepoItem[];
   isLoading: boolean;
-  load: (input: string | null) => void;
-};
+}

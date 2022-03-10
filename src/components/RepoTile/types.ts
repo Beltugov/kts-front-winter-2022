@@ -1,7 +1,5 @@
-import {RepoItem} from "../../store/GitHubStore/types";
-import React from "react";
+import { RepoItem } from "../../store/GitHubStore/types";
 
 export interface IRepoTile {
-    item: RepoItem;
-    onClick: (e: React.MouseEvent) => void;
+  item: RepoItem;
 }

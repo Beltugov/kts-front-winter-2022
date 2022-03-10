@@ -4,8 +4,9 @@ import "./ReposPage.scss";
 import { context } from "../RepoSearchPage/ReposSearchPage";
 
 const ReposPage = () => {
-  const repoArr = useContext(context);
-  return <div></div>;
+  const someContext = useContext(context);
+
+  return <div>{someContext?.list}</div>;
 };
 
 export default ReposPage;
