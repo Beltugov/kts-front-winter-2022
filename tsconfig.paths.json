@@ -5,6 +5,9 @@
       "@types/*": [
         "src/types/*"
       ],
+      "@store/*": [
+        "src/store/*"
+      ],
       "@assets/*": [
         "src/assets/*"
       ],

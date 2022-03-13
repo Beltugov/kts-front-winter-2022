@@ -1,4 +1,4 @@
-import { RepoItem } from "../../store/GitHubStore/types";
+import { RepoItem } from "../../store/ReposListStore/types";
 
 export type ReposContext = {
   list: RepoItem[];
