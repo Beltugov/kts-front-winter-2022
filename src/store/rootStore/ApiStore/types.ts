@@ -19,10 +19,8 @@ export type RequestParams<ReqT> = {
 };
 
 // Перечисление статусов ответа
-enum StatusHTTP {
-  OK = 200,
-  BadRequest = 400,
-  InternalServeError = 500,
+export enum StatusHTTP {
+  UNEXPECTED_ERROR = "UNEXPECTED_ERROR",
 }
 
 // Ответ API
@@ -30,11 +28,16 @@ export type ApiResponse<SuccessT, ErrorT> =
   | {
       success: true;
       data: SuccessT;
-      status: StatusHTTP;
+      status: number;
     }
   | {
       success: false;
       data: ErrorT;
+      status: number;
+    }
+  | {
+      success: false;
+      data: null;
       status: StatusHTTP;
     };
 

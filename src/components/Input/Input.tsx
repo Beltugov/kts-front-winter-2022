@@ -1,8 +1,7 @@
 import React from "react";
+import "./Input.scss";
 
 import { IInput } from "./types";
-
-import "./Input.scss";
 
 const Input: React.FC<IInput> = ({ value, placeholder, onChange }) => {
   return (

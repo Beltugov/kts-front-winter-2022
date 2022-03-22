@@ -1,5 +1,5 @@
-import ReposPage from "./pages/RepoPage/ReposPage";
-import ReposSearchPage from "./pages/RepoSearchPage/ReposSearchPage";
+import ReposPage from "../pages/RepoPage/ReposPage";
+import ReposSearchPage from "../pages/RepoSearchPage/ReposSearchPage";
 
 export const REPOS_ROUTE = "/repos";
 

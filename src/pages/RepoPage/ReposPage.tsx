@@ -10,22 +10,16 @@ const ReposPage = () => {
   const params = useParams();
   const repoPageStore = useLocalStore(() => new RepoPageStore());
   const repo = params.name?.slice(1);
-  const getRepos = (input: string | null): void => {
-    repoPageStore.getOrganizationRepo({
-      owner: "ktsstudio",
-      repo: repo,
-    });
+  const getRepos = (): void => {
+    // repoPageStore.getRepo(owner, repo);
   };
 
   useEffect(() => {
-    getRepos(null);
+    getRepos();
   }, [repoPageStore]);
 
   return (
-    <div>
-      <div>Пользователь {repoPageStore.repo.login}</div>
-      <div>Репозиторий {repoPageStore.repo.name}</div>
-    </div>
+    <div className="repo">Здесь должен быть репозиторий но его пока нет...</div>
   );
 };
 
