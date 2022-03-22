@@ -1,8 +1,7 @@
 import React from "react";
 
+import { REPOS_ROUTE, routes } from "@utils/routes";
 import { Routes, Route, Navigate } from "react-router-dom";
-
-import { REPOS_ROUTE, routes } from "./routes";
 
 const AppRoutes = () => {
   return (

@@ -1,6 +1,6 @@
 import qs from "qs";
 
-import { ApiResponse, IApiStore, RequestParams } from "./types";
+import { ApiResponse, IApiStore, RequestParams, StatusHTTP } from "./types";
 
 export default class ApiStore implements IApiStore {
   readonly baseUrl: string;
@@ -32,23 +32,22 @@ export default class ApiStore implements IApiStore {
     return [url, req];
   }
 
-  request<SuccessT, ErrorT = any, ReqT = {}>(
+  async request<SuccessT, ErrorT = any, ReqT = {}>(
     params: RequestParams<ReqT>
   ): Promise<ApiResponse<SuccessT, ErrorT>> {
-    return fetch(...this.getRequestData(params)).then((res: any) => {
-      if (res.status === 200) {
-        return {
-          success: true,
-          data: res.json(),
-          status: res.status,
-        };
-      } else {
-        return {
-          success: false,
-          data: res.json(),
-          status: res.status,
-        };
-      }
-    });
+    try {
+      const response = await fetch(...this.getRequestData(params));
+      return {
+        success: response.ok,
+        data: await response.json(),
+        status: response.status,
+      };
+    } catch (e) {
+      return {
+        success: false,
+        data: null,
+        status: StatusHTTP.UNEXPECTED_ERROR,
+      };
+    }
   }
 }

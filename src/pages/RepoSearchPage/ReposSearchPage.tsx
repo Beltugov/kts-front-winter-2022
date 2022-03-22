@@ -1,66 +1,87 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Button from "@components/Button";
+import Error from "@components/Error/Error";
 import Input from "@components/Input";
+import Loading from "@components/Loading/Loading";
 import RepoTile from "@components/RepoTile";
 import SearchIcon from "@components/SearchIcon";
 import "./RepoSearchPage.scss";
-import GitHubStore from "@store/ReposListStore/ReposListStore";
-import { RepoItem } from "@store/ReposListStore/types";
+import InputStore from "@store/InputStore/InputStore";
+import { GitHubRepoBranchesModel } from "@store/models/gitHub/gitHubRepoBranches";
+import { RepoItemModel } from "@store/models/gitHub/repoItem";
+import RepoBranchesStore from "@store/RepoBranchesStore";
+import ReposListStore from "@store/ReposListStore/ReposListStore";
 import useLocalStore from "@store/rootStore/hooks/UseLocalStore";
+import { useQueryParamsStoreInit } from "@store/rootStore/hooks/useQueryParamsStoreInit";
 import { Meta } from "@utils/meta";
+import { Drawer } from "antd";
 import { observer } from "mobx-react-lite";
-import { Link } from "react-router-dom";
-
-import { REPOS_ROUTE } from "../../routes";
-import { ReposContext } from "./type";
-
-export const context = createContext<ReposContext | null>(null);
 
 export const ReposSearchPage: React.FC = () => {
-  const [searchInput, setSearchInput] = useState<string>("");
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value);
+  useQueryParamsStoreInit();
+  const [visible, setVisible] = useState(false);
+  const reposListStore = useLocalStore(() => new ReposListStore());
+  const inputStore = useLocalStore(() => new InputStore());
+  const repoBranchesStore = useLocalStore(() => new RepoBranchesStore());
+  const showDrawer = (repo: string) => {
+    getBranches(repo);
+    setVisible(true);
   };
-  const gitHubStore = useLocalStore(() => new GitHubStore());
-
-  const getRepos = (input: string | null): void => {
-    gitHubStore.getOrganizationReposList({
-      organizationName: "ktsstudio",
-    });
+  const onClose = () => {
+    setVisible(false);
   };
-
+  const getRepos = () => {
+    inputStore.input !== "" &&
+      reposListStore.getOrganizationReposList({
+        organizationName: inputStore.input,
+      });
+  };
+  const getBranches = (repo: string) => {
+    repoBranchesStore.getRepoBranches(inputStore.input, repo);
+  };
   useEffect(() => {
-    getRepos(null);
-  }, [gitHubStore]);
-
+    getRepos();
+  }, [reposListStore]);
   return (
     <div className="repo">
       <div className="repo__search">
         <Input
-          value={searchInput}
-          onChange={handleInput}
-          placeholder={"Введите название организации"}
+          value={inputStore.input}
+          onChange={(event) => inputStore.setInput(event.currentTarget.value)}
+          placeholder="Введите название организации"
         />
         <Button
-          isDisabled={gitHubStore.meta === Meta.loading}
+          isDisabled={reposListStore.meta === Meta.loading}
           onClick={getRepos}
-          inputValue={searchInput}
+          inputValue={inputStore.input}
         >
           <SearchIcon />
         </Button>
       </div>
       <ul className="repo__list">
-        {(gitHubStore.meta === Meta.loading && <div>Загрузка...</div>) ||
-          (gitHubStore.meta === Meta.error && (
-            <div>Что-то пошло не так...</div>
-          ))}
-        {gitHubStore.list.map((item: RepoItem) => (
-          <Link to={REPOS_ROUTE + `/:${item.name}`}>
-            <RepoTile key={item.id} item={item} onClick={() => {}} />
-          </Link>
-        ))}
+        {reposListStore.meta === Meta.loading ? (
+          <Loading />
+        ) : reposListStore.meta === Meta.error ? (
+          <Error />
+        ) : (
+          reposListStore.list.map((item: RepoItemModel) => (
+            <RepoTile key={item.id} item={item} showDrawer={showDrawer} />
+          ))
+        )}
       </ul>
+      <Drawer
+        title="Ветки репозитория"
+        placement="right"
+        onClose={onClose}
+        visible={visible}
+      >
+        <ul className="branches__list">
+          {repoBranchesStore.branch.map((item: GitHubRepoBranchesModel) => (
+            <li className="branches__list-item">{item.name}</li>
+          ))}
+        </ul>
+      </Drawer>
     </div>
   );
 };

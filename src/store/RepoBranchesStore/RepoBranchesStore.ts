@@ -1,8 +1,14 @@
 import {
+  GitHubRepoBranchesApi,
+  GitHubRepoBranchesModel,
+} from "@store/models/gitHub/gitHubRepoBranches";
+import {
   normalizeGitHubRepoItem,
   RepoItemApi,
   RepoItemModel,
 } from "@store/models/gitHub/repoItem";
+import { IRepoBranchesStore } from "@store/RepoBranchesStore/types";
+import { BASE_URL } from "@store/ReposListStore/ReposListStore";
 import {
   GetOrganizationReposListParams,
   IReposListStore,
@@ -20,61 +26,55 @@ import {
 import ApiStore from "../rootStore/ApiStore";
 import { HTTPMethod } from "../rootStore/ApiStore/types";
 
-export const BASE_URL = "https://api.github.com";
+type PrivateFields = "_branch" | "_meta";
 
-type PrivateFields = "_list" | "_meta";
-
-export default class ReposListStore implements IReposListStore, ILocalStore {
+export default class RepoBranchesStore
+  implements IRepoBranchesStore, ILocalStore
+{
   private readonly _apiStore = new ApiStore(BASE_URL);
 
-  private _list: RepoItemModel[] = [];
+  private _branch: GitHubRepoBranchesModel[] = [];
   private _meta: Meta = Meta.initial;
 
   constructor() {
-    makeObservable<ReposListStore, PrivateFields>(this, {
-      _list: observable.ref,
+    makeObservable<RepoBranchesStore, PrivateFields>(this, {
+      _branch: observable.ref,
       _meta: observable,
-      list: computed,
+      branch: computed,
       meta: computed,
-      getOrganizationReposList: action,
+      getRepoBranches: action,
     });
   }
 
-  get list(): RepoItemModel[] {
-    return this._list;
+  get branch(): GitHubRepoBranchesModel[] {
+    return this._branch;
   }
 
   get meta(): Meta {
     return this._meta;
   }
 
-  async getOrganizationReposList(
-    params: GetOrganizationReposListParams
-  ): Promise<void> {
+  async getRepoBranches(owner: string, repo: string): Promise<void> {
     this._meta = Meta.loading;
-    this._list = [];
-
-    const response = await this._apiStore.request<RepoItemApi[]>({
+    this._branch = [];
+    const response = await this._apiStore.request<GitHubRepoBranchesApi[]>({
       method: HTTPMethod.GET,
       data: {},
       headers: {},
-      endpoint: `/orgs/${params.organizationName}/repos`,
+      endpoint: `/repos/${owner}/${repo}/branches`,
     });
-
     runInAction(() => {
       if (!response.success) {
         this._meta = Meta.error;
       }
       try {
-        for (const item of response.data) {
-          this._list.push(normalizeGitHubRepoItem(item));
-        }
+        this._branch = response.data;
         this._meta = Meta.success;
       } catch (e) {
         // eslint-disable-next-line no-console
         console.log(e);
         this._meta = Meta.error;
-        this._list = [];
+        this._branch = [];
       }
     });
   }
